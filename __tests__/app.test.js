@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const UserService = require('../lib/services/UserService');
 
 describe('top-secret routes', () => {
   beforeEach(() => {
@@ -19,4 +20,23 @@ describe('top-secret routes', () => {
 
     expect(res.body).toEqual({ user_id: expect.any(String), email: 'ilovechicken@gmail.com'})
   })
+
+  it('signs in a user', async () => {
+    const user = await UserService.create({
+      email: 'denzel@defence.gov',
+      password: 'balut',
+    });
+
+    const res = await request(app)
+    .post('/api/v1/users/signin')
+    .send({
+      email: 'denzel@defence.gov',
+      password: 'balut'
+    });
+
+    expect(res.body).toEqual({
+      message: 'You have successfully signed in!',
+      user
+    });
+  });
 });

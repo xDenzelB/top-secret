@@ -83,8 +83,8 @@ describe('top-secret routes', () => {
 
     const res = await agent.get('/api/v1/confidential');
 
-    expect(res.body).toEqual({
-      title: '007', description: 'espionage', createdAt: expect.any(String)
-    });
+    expect(res.body).toEqual([{
+    id: expect.any(String),  title: '007', description: 'espionage', created_at: expect.any(String)
+    }]);
   })
 });

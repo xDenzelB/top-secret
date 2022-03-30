@@ -15,3 +15,9 @@ CREATE TABLE users (
     email TEXT NOT NULL,
     password_hash TEXT NOT NULL
 );
+
+
+INSERT INTO 
+confidential (title, description)
+VALUES 
+('007', 'espionage');

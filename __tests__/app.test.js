@@ -39,4 +39,24 @@ describe('top-secret routes', () => {
       user
     });
   });
+
+  it('should be able to logout a user', async () => {
+    let user = await UserService.create({
+      email: 'denzel@defence.gov',
+      password: 'balut',
+    });
+
+    user = await UserService.signIn({
+      email: 'denzel@defence.gov',
+      password: 'balut',
+    });
+
+    const res = request(app)
+    .delete('/api/v1/users/sessions')
+    .send(user);
+
+    expect(res.body).toEqual({
+      message: 'Successfully signed out',
+    });
+  })
 });

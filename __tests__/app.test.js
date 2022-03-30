@@ -65,5 +65,26 @@ describe('top-secret routes', () => {
     expect(res.body).toEqual({
       message: 'Successfully signed out',
     });
+  });
+
+  it('should return a list of secrets', async () => {
+    const agent = request.agent(app);
+    await UserService.create({
+      email: 'denzel@defence.gov',
+      password: 'balut',
+    });
+
+  const user = await agent
+    .post('/api/v1/users/signin')
+    .send({
+      email: 'denzel@defence.gov',
+      password: 'balut',
+    });
+
+    const res = await agent.get('/api/v1/confidential');
+
+    expect(res.body).toEqual({
+      title: '007', description: 'espionage', createdAt: expect.any(String)
+    });
   })
 });
